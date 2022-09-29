@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace SistemaJogadoresFutebol.Models
 {
@@ -25,8 +26,20 @@ namespace SistemaJogadoresFutebol.Models
     {
         Goleiro, 
         Defensor,
-        [Description("Meio Campo")]
+        [Display(Name = "Meio Campo")]
         MeioCampo, 
         Atacante 
+    }
+
+    public static class EnumExtensions
+    {
+        public static string GetDisplayName(this Enum enumValue)
+        {
+            return enumValue.GetType()
+                            .GetMember(enumValue.ToString())
+                            .First()
+                            .GetCustomAttribute<DisplayAttribute>()
+                            .GetName();
+        }
     }
 }

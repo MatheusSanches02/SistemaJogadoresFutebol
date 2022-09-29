@@ -11,7 +11,7 @@ namespace SistemaJogadoresFutebol.Controllers
             return View();
         }
 
-        // GET: JogadorController/Details/5
+        // GET: JogadorController/Details/id
         public ActionResult Details(int id)
         {
             return View();
@@ -25,7 +25,6 @@ namespace SistemaJogadoresFutebol.Controllers
 
         // POST: JogadorController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -38,15 +37,14 @@ namespace SistemaJogadoresFutebol.Controllers
             }
         }
 
-        // GET: JogadorController/Edit/5
+        // GET: JogadorController/Edit/id
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: JogadorController/Edit/5
+        // POST: JogadorController/Edit/id
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
             try
@@ -59,15 +57,14 @@ namespace SistemaJogadoresFutebol.Controllers
             }
         }
 
-        // GET: JogadorController/Delete/5
+        // GET: JogadorController/Delete/id
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: JogadorController/Delete/5
+        // POST: JogadorController/Delete/id
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
