@@ -1,80 +1,72 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using SistemaJogadoresFutebol.Models;
 
 namespace SistemaJogadoresFutebol.Controllers
 {
     public class JogadorController : Controller
     {
+        //Lista estática para armazenar carros
+        private static List<Jogador> _jogadores = new List<Jogador>();
+        //Contador estático para definir o código do veiculo
+        private static int _id = 0;
+        private void CarregarLigas()
+        {
+            var ligas = new List<string>(new string[] { "Brasileirão", "Ligue 1", "Premiere League", "Serie A", "La Liga", "Bundesliga" });
+
+            ViewBag.LigaDisputada = new SelectList(ligas);
+        }
+
         // GET: JogadorController
         public ActionResult Index()
         {
-            return View();
+            return View(_jogadores);
         }
 
-        // GET: JogadorController/Details/id
-        public ActionResult Details(int id)
+        // GET: JogadorController/Cadastrar
+        public ActionResult Cadastrar()
         {
+            CarregarLigas();
             return View();
         }
 
-        // GET: JogadorController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: JogadorController/Create
+        // POST: JogadorController/Cadastrar
         [HttpPost]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Cadastrar(Jogador jogador)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            jogador.Id = ++_id;
+            _jogadores.Add(jogador);
+            TempData["mensagemSucesso"] = "Jogador Cadastrado!";
+            return RedirectToAction("Cadastrar");
         }
 
-        // GET: JogadorController/Edit/id
-        public ActionResult Edit(int id)
+        // GET: JogadorController/Editar/id
+        public ActionResult Editar(int id)
         {
-            return View();
+            var jogador = _jogadores.Find(x => x.Id == id);
+            CarregarLigas();
+            return View(jogador);
         }
 
         // POST: JogadorController/Edit/id
         [HttpPost]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Editar(Jogador jogador)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _jogadores[_jogadores.FindIndex(x => x.Id == jogador.Id)] = jogador;
+            TempData["mensagemSucessoEditar"] = "Jogador editado com sucesso!";
+            return RedirectToAction("Index");
         }
 
-        // GET: JogadorController/Delete/id
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: JogadorController/Delete/id
+        // POST: JogadorController/Deletar/id
         [HttpPost]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Deletar(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var index = _jogadores.FindIndex(x => x.Id == id);
+            _jogadores.RemoveAt(index);
+            TempData["mensagemSucessoExcluir"] = "Jogador excluido com sucesso!";
+
+            return RedirectToAction("Index");
         }
     }
 }

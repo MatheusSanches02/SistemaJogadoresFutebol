@@ -12,6 +12,8 @@ namespace SistemaJogadoresFutebol.Models
         public string? Nome { get; set; }
         public int Idade { get; set; }
         public string? Nacionalidade { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Nascimento { get; set; }
 
         [Display(Name = "Liga Disputada")]
@@ -24,10 +26,13 @@ namespace SistemaJogadoresFutebol.Models
 
     public enum Posicao
     {
-        Goleiro, 
+        [Display(Name = "Goleiro")]
+        Goleiro,
+        [Display(Name = "Defensor")]
         Defensor,
         [Display(Name = "Meio Campo")]
-        MeioCampo, 
+        MeioCampo,
+        [Display(Name = "Atacante")]
         Atacante 
     }
 
@@ -39,7 +44,7 @@ namespace SistemaJogadoresFutebol.Models
                             .GetMember(enumValue.ToString())
                             .First()
                             .GetCustomAttribute<DisplayAttribute>()
-                            .GetName();
+                            ?.GetName();
         }
     }
 }

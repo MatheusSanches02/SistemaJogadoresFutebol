@@ -1,0 +1,18 @@
+﻿@model Jogador
+
+@{
+    ViewData["Title"] = "Cadastrar";
+}
+
+<h1>Cadastrar</h1>
+
+
+<mensagem mensagem="@TempData["mensagemSucesso"]"></mensagem>
+
+<form asp-controller="jogador" asp-action="cadastrar">
+
+    <partial name="_Form" />
+
+    <botao texto="Cadastrar"></botao>
+    <a asp-action="index" class="btn btn-outline-dark">Consultar</a>
+</form>

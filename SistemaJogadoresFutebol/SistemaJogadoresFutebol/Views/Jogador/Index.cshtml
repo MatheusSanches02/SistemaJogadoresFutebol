@@ -1,0 +1,65 @@
+﻿@model List<Jogador>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de Jogadores</h1>
+
+
+<a asp-action="cadastrar" class="btn btn-sm btn-outline-dark">Cadastrar</a>
+
+<table class="table">
+    <tr>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Nacionalidade</th>
+        <th>Nascimento</th>
+        <th>Liga Disputada</th>
+        <th>Condição de Jogo</th>
+        <th>Posição</th>
+        <th></th>
+    </tr>
+
+    @foreach (var jogador in Model)
+    {
+        <tr>
+            <td>@jogador.Nome</td>
+            <td>@jogador.Idade</td>
+            <td>@jogador.Nacionalidade</td>
+            <td>@jogador.Nascimento</td>
+            <td>@jogador.LigaDisputada</td>
+            <td>@(jogador.Lesionado ? "Lesionado" : "Sem Lesão")</td>
+            <td>@jogador.Posicao.GetDisplayName()</td>
+            <td>
+                <a asp-action="editar" asp-route-id="@jogador.Id" class="btn btn-sm"><i class="fa fa-solid fa-pen"></i></a>
+                <button onclick="jogadorId.value = @jogador.Id" type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa fa-solid fa-trash"></i>
+                </button>
+            </td>
+
+        </tr>
+    }
+</table>
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja mesmo excluir?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="deletar">
+                    <input name="id" type="hidden" id="jogadorId" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
